@@ -21,6 +21,9 @@ written complaint.
    are kept for final comparison rather than model selection.
 7. Classify new complaints with the selected checkpoint.
 
+   The dataset summary includes per-class counts, percentages, the largest-to-
+   smallest class ratio, and split sizes.
+
 ## Dataset
 
 The expected input is a UTF-8 CSV with the columns `product` and `narrative`.
@@ -60,8 +63,7 @@ example, the `torch==2.5.1` CUDA 12.1 wheel was verified on an NVIDIA driver
 that supports CUDA 12.1:
 
 ```bash
-python -m pip install --force-reinstall torch==2.5.1 \
-  --index-url https://download.pytorch.org/whl/cu121
+python -m pip install --force-reinstall torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 ```
 
 ## Train and compare all four models

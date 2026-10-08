@@ -442,14 +442,20 @@ def main() -> None:
     (args.output_dir / "labels.json").write_text(
         json.dumps(class_names, indent=2), encoding="utf-8"
     )
+    class_counts = {label: labels.count(label) for label in class_names}
     (args.output_dir / "dataset_summary.json").write_text(
         json.dumps(
             {
                 "usable_examples": len(texts),
                 "dropped_empty_narratives": dropped,
-                "class_counts": {
-                    label: labels.count(label) for label in class_names
+                "class_counts": class_counts,
+                "class_percentages": {
+                    label: round(count / len(texts) * 100, 2)
+                    for label, count in class_counts.items()
                 },
+                "class_imbalance_ratio": round(
+                    max(class_counts.values()) / min(class_counts.values()), 2
+                ),
                 "split_sizes": {
                     "train": len(train_texts),
                     "validation": len(validation_texts),
