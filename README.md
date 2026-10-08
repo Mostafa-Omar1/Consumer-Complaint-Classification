@@ -46,8 +46,9 @@ reflect the local CSV used for this run.
 ## Notebook walkthrough
 
 Open [Consumer_Complaint_Classification.ipynb](./Consumer_Complaint_Classification.ipynb)
-in VS Code, select the **Python 3.12 (Complaint Classifier)** kernel, and run
-the cells from top to bottom. The notebook explores class balance, streams
+in VS Code, select the project virtual environment as the notebook kernel, and run
+the cells from top to bottom. Create the environment with the setup commands below;
+the notebook requires Python 3.10–3.12. The notebook explores class balance, streams
 model-training progress, compares the test metrics and confusion matrices, and
 classifies an illustrative new complaint.
 
