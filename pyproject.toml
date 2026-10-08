@@ -14,7 +14,12 @@ dependencies = [
     "tensorflow>=2.16,<2.18",
     "torch>=2.2,<3",
     "transformers>=4.40,<5",
-    "msvc-runtime>=14.40; platform_system == 'Windows'",
+    "msvc-runtime>=14.40; platform_system == 'Windows' and python_version >= '3.11'",
+]
+
+[project.optional-dependencies]
+notebook = [
+    "ipykernel>=6.29,<8",
 ]
 
 [tool.setuptools.packages.find]

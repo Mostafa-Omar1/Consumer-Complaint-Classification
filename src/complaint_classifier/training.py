@@ -335,7 +335,7 @@ def _fit_transformer(
     for epoch in range(args.epochs):
         model.train()
         total_train_loss = 0.0
-        for encoded, labels in train_loader:
+        for batch_index, (encoded, labels) in enumerate(train_loader, start=1):
             encoded = {key: value.to(device) for key, value in encoded.items()}
             labels = labels.to(device)
             optimizer.zero_grad(set_to_none=True)
@@ -345,6 +345,12 @@ def _fit_transformer(
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             total_train_loss += loss.item() * labels.size(0)
+            if batch_index % 250 == 0 or batch_index == len(train_loader):
+                print(
+                    f"transformer epoch {epoch + 1}/{args.epochs}: "
+                    f"batches {batch_index}/{len(train_loader)}",
+                    flush=True,
+                )
 
         val_true, val_pred, validation_loss = predict(validation_loader)
         validation_f1 = float(

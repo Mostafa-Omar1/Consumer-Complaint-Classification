@@ -21,8 +21,16 @@ written complaint.
    are kept for final comparison rather than model selection.
 7. Classify new complaints with the selected checkpoint.
 
-   The dataset summary includes per-class counts, percentages, the largest-to-
-   smallest class ratio, and split sizes.
+The dataset summary includes per-class counts, percentages, the largest-to-
+smallest class ratio, and split sizes.
+
+## Notebook walkthrough
+
+Open [Consumer_Complaint_Classification.ipynb](./Consumer_Complaint_Classification.ipynb)
+in VS Code, select the **Python 3.12 (Complaint Classifier)** kernel, and run
+the cells from top to bottom. The notebook explores class balance, streams
+model-training progress, compares the test metrics and confusion matrices, and
+classifies an illustrative new complaint.
 
 ## Dataset
 
@@ -47,15 +55,16 @@ python -m venv .venv
 # macOS/Linux:
 # source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e .
+python -m pip install -e ".[notebook]"
 ```
 
 The first transformer run downloads the selected pretrained checkpoint from
 Hugging Face. A CUDA-capable PyTorch installation is used automatically when
 available; otherwise training runs on CPU.
-On Windows, the `msvc-runtime` dependency provides the Microsoft C++ runtime
-DLLs inside the Python environment, so a machine-wide administrator install is
-not required.
+On Windows with Python 3.11 or 3.12, the `msvc-runtime` dependency provides
+the Microsoft C++ runtime DLLs inside the Python environment, so a
+machine-wide administrator install is not required. Python 3.10 users may
+need to install the Microsoft Visual C++ Redistributable separately.
 The default PyTorch package may be CPU-only. For an NVIDIA GPU, install a
 CUDA-enabled PyTorch wheel compatible with your installed driver using the
 [official PyTorch selector](https://pytorch.org/get-started/locally/). For
