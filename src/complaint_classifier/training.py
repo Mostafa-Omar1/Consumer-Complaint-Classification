@@ -201,7 +201,11 @@ def _fit_recurrent_model(
         json.dumps(model_config, indent=2), encoding="utf-8"
     )
 
-    validation_predictions = model.predict(x_validation, batch_size=args.batch_size)
+    validation_predictions = model.predict(
+        x_validation,
+        batch_size=args.batch_size,
+        verbose=0,
+    )
     validation_f1 = float(
         f1_score(
             validation_y,
@@ -210,7 +214,11 @@ def _fit_recurrent_model(
             zero_division=0,
         )
     )
-    test_predictions = model.predict(x_test, batch_size=args.batch_size)
+    test_predictions = model.predict(
+        x_test,
+        batch_size=args.batch_size,
+        verbose=0,
+    )
     test_metrics = _save_metrics(
         model_name,
         test_y,
