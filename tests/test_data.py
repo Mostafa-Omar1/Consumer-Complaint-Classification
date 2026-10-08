@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from complaint_classifier.data import clean_text, load_dataset
+from complaint_classifier.data import clean_text, load_dataset, stratified_split
 
 
 class CleanTextTests(unittest.TestCase):
@@ -39,6 +39,28 @@ class LoadDatasetTests(unittest.TestCase):
             path.write_text("category,text\nx,y\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "must contain columns"):
                 load_dataset(path)
+
+
+class StratifiedSplitTests(unittest.TestCase):
+    def test_split_is_reproducible_and_preserves_each_class(self) -> None:
+        texts = [f"complaint {index}" for index in range(100)]
+        labels = ["credit_card"] * 50 + ["debt_collection"] * 50
+
+        first = stratified_split(texts, labels, random_state=42)
+        second = stratified_split(texts, labels, random_state=42)
+
+        self.assertEqual(first, second)
+        train_texts, validation_texts, test_texts, train_y, validation_y, test_y = first
+        self.assertEqual(
+            (len(train_texts), len(validation_texts), len(test_texts)),
+            (70, 10, 20),
+        )
+        for split_labels in (train_y, validation_y, test_y):
+            self.assertEqual(set(split_labels), set(labels))
+
+    def test_rejects_mismatched_inputs(self) -> None:
+        with self.assertRaisesRegex(ValueError, "same number of rows"):
+            stratified_split(["complaint"], ["credit_card", "debt_collection"])
 
 
 if __name__ == "__main__":

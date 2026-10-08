@@ -149,7 +149,11 @@ def _fit_recurrent_model(
     vocab_size = min(args.max_vocab_size, len(tokenizer.word_index) + 1)
 
     inputs = tf.keras.Input(shape=(args.max_length,), dtype="int32")
-    embedded = tf.keras.layers.Embedding(vocab_size, args.embedding_dim)(inputs)
+    embedded = tf.keras.layers.Embedding(
+        vocab_size,
+        args.embedding_dim,
+        mask_zero=True,
+    )(inputs)
     if model_name == "rnn":
         encoded = tf.keras.layers.SimpleRNN(64)(embedded)
     elif model_name == "lstm":
@@ -167,7 +171,7 @@ def _fit_recurrent_model(
 
     model_dir = output_dir / model_name
     model_dir.mkdir(parents=True, exist_ok=True)
-    history = model.fit(
+    model.fit(
         x_train,
         train_y,
         validation_data=(x_validation, validation_y),

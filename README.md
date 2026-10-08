@@ -50,6 +50,9 @@ python -m pip install -e .
 The first transformer run downloads the selected pretrained checkpoint from
 Hugging Face. A CUDA-capable PyTorch installation is used automatically when
 available; otherwise training runs on CPU.
+On Windows, the `msvc-runtime` dependency provides the Microsoft C++ runtime
+DLLs inside the Python environment, so a machine-wide administrator install is
+not required.
 
 ## Train and compare all four models
 

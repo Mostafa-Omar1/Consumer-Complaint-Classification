@@ -14,6 +14,7 @@ dependencies = [
     "tensorflow>=2.16,<2.18",
     "torch>=2.2,<3",
     "transformers>=4.40,<5",
+    "msvc-runtime>=14.40; platform_system == 'Windows'",
 ]
 
 [tool.setuptools.packages.find]
