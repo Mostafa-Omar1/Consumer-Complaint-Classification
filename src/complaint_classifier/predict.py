@@ -28,14 +28,18 @@ def predict_complaint(text: str, output_dir: str | Path = "outputs") -> dict[str
             (model_dir / "training_config.json").read_text(encoding="utf-8")
         )
         tokenizer = AutoTokenizer.from_pretrained(model_dir)
-        model = AutoModelForSequenceClassification.from_pretrained(model_dir)
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model = AutoModelForSequenceClassification.from_pretrained(model_dir).to(device)
         model.eval()
-        encoded = tokenizer(
-            cleaned,
-            truncation=True,
-            max_length=config["max_length"],
-            return_tensors="pt",
-        )
+        encoded = {
+            key: value.to(device)
+            for key, value in tokenizer(
+                cleaned,
+                truncation=True,
+                max_length=config["max_length"],
+                return_tensors="pt",
+            ).items()
+        }
         with torch.no_grad():
             probabilities = torch.softmax(model(**encoded).logits[0], dim=0).tolist()
     else:
