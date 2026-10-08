@@ -53,6 +53,16 @@ available; otherwise training runs on CPU.
 On Windows, the `msvc-runtime` dependency provides the Microsoft C++ runtime
 DLLs inside the Python environment, so a machine-wide administrator install is
 not required.
+The default PyTorch package may be CPU-only. For an NVIDIA GPU, install a
+CUDA-enabled PyTorch wheel compatible with your installed driver using the
+[official PyTorch selector](https://pytorch.org/get-started/locally/). For
+example, the `torch==2.5.1` CUDA 12.1 wheel was verified on an NVIDIA driver
+that supports CUDA 12.1:
+
+```bash
+python -m pip install --force-reinstall torch==2.5.1 \
+  --index-url https://download.pytorch.org/whl/cu121
+```
 
 ## Train and compare all four models
 
