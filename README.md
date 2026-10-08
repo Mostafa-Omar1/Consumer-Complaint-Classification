@@ -24,6 +24,25 @@ written complaint.
 The dataset summary includes per-class counts, percentages, the largest-to-
 smallest class ratio, and split sizes.
 
+## Benchmark results
+
+Measured on the held-out test split of the local dataset after three training
+epochs (seed 42, maximum sequence length 256). The stratified split contained
+113,687 training, 16,241 validation, and 32,483 test examples. The checkpoint
+was selected using validation weighted F1.
+
+| Model | Accuracy | Macro precision | Macro recall | Macro F1 | Weighted F1 |
+|---|---:|---:|---:|---:|---:|
+| SimpleRNN | 73.27% | 66.32% | 70.87% | 66.81% | 73.99% |
+| LSTM | 82.55% | 75.82% | 83.84% | 79.21% | 83.04% |
+| GRU | 85.26% | 79.62% | 85.38% | 82.09% | 85.62% |
+| DistilBERT | **88.05%** | **84.27%** | 85.39% | **84.80%** | **88.08%** |
+
+DistilBERT was the best model on validation weighted F1 and also achieved the
+highest held-out test accuracy and weighted F1. The dataset CSV and model
+checkpoints are intentionally excluded from the public repository; metrics
+reflect the local CSV used for this run.
+
 ## Notebook walkthrough
 
 Open [Consumer_Complaint_Classification.ipynb](./Consumer_Complaint_Classification.ipynb)
