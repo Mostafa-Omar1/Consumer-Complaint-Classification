@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Complaint narratives and generated models/reports are not tracked.
+complaints_processed.csv
+data/
+outputs/
+*.keras
+*.pt
+*.bin
+*.safetensors
+
+.vscode/
+.idea/
